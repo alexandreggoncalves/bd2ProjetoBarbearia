@@ -1,0 +1,129 @@
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-12">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table align-items-center mb-0">
+                        <tr>
+                            <td>
+                                {{#if employees._id }}
+                                    <h6>Editando funcionário ID: <span class="badge rounded-pill bg-warning text-dark">{{ employees._id }}</span></h6>
+                                {{else}}
+                                    <h6>{{page}}</h6>
+                                {{/if }}
+                            </td>
+                            <td><a href="/employees"><button class="btn btn-success">Listar funcionários</button></a></td>
+                        </table>
+                        <!-- Horizontal Form -->
+                        <form action="/employees/addOrEdit" method="post">
+                            <input type="hidden" name="_id" value="{{employees._id}}">
+                            <div class="row mb-2">                                                                
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Nome</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Nome" required value="{{employees.name}}">
+                                </div>
+                                <div class="col-sm-4"></div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Email:</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="emailAddress" name="emailAddress" placeholder="Email" required value="{{employees.emailAddress}}">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">CPF:</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="cpf" name="cpf" placeholder="CPF" required value="{{employees.cpf}}">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Telefone(s):</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Telefone" required value="{{employees.phoneNumber}}">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Adimissão:</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" id="admissionDate" name="admissionDate" placeholder="Admissão" required value="{{employees.admissionDate}}">&nbsp;<label for="imputEmail3">(dd/mm/aaaa)</label>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Nascimento:</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" id="birthday" name="birthday" placeholder="Nascimento" value="{{employees.birthday}}">&nbsp;<label for="imputEmail3">(dd/mm/aaaa)</label>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Sexo:</label>
+                                <div class="col-sm-2">
+                                    <div class="input-group date" id="datetimepicker5" data-provide="datepicker">
+                                        <select name="genere" id="genere">
+                                            <option value="Feminino" {{#if_equal employees.genere "Feminino"}} selected {{/if_equal}}>Feminino</option>
+                                            <option value="Masculino" {{#if_equal employees.genere "Masculino"}} selected {{/if_equal}}>Masculino</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Função:</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="function" name="function" placeholder="Função" required value="{{employees.function}}">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">PIS:</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" id="socialSecurity" name="socialSecurity" placeholder="PIS" required value="{{employees.socialSecurity}}">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Endereço:</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="street" name="street" placeholder="Avenida/Rua/Praça/Quadra" required value="{{employees.address.street}}">
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" id="number" name="number" placeholder="Número" required value="{{employees.address.number}}">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label"></label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="neighborhood" name="neighborhood" placeholder="Bairro" required value="{{employees.address.neighborhood}}">
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="city" name="city" placeholder="Cidade" required value="{{employees.address.city}}">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label"></label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="state" name="state" placeholder="Estado" required value="{{employees.address.state}}">
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="country" name="country" placeholder="País" required value="{{employees.address.country}}">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label"></label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control" id="zipCode" name="zipCode" placeholder="CEP" required value="{{employees.address.zipCode}}">
+                                </div>
+                                <div class="col-sm-5">
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">Salvar</button>
+                                {{#unless employees._id }}
+                                    <button type="reset" class="btn btn-secondary">Limpar</button>
+                                {{/unless}}
+                            </div>
+                        </form><!-- End Horizontal Form -->
+                    </div>
+                </div>
+            </div>         
+          </div>
+         </div>
+        </div>
+    </div>

@@ -15,23 +15,33 @@ router.get('/', (req, res) => {
 })
 
 router.get('/addOrEdit', (req, res) => {
-    res.render('clients/addOrEdit')
+    res.render('clients/addOrEdit', { title: "Cadastro de clientes", page: "Inseir novo cliente" })
 })
 
 // inserir
 router.post('/addOrEdit', (req, res) => {
     const clients = {
         name: req.body.name,
-        cpf: req.body.cpf, 
         emailAddress: req.body.emailAddress,
+        cpf: req.body.cpf, 
+        phoneNumber: req.body.phoneNumber, 
         birthday: req.body.birthday, 
         genere: req.body.genere,
-        admissionYear: req.body.admissionYear,
-        phoneNumber: req.body.phoneNumber, 
+        clientSince: req.body.clientSince,
+        address: { street: req.body.street, 
+                        number: req.body.number, 
+                        city: req.body.city, 
+                        zipCode: req.body.zipCode, 
+                        neighborhood: req.body.neighborhood, 
+                        state: req.body.state, 
+                        country: req.body.country, 
+                }
     }
+
+    console.log(clients)
     const { _id} = req.body
     if(_id == '')
-        new Client({...clients}).save()
+        new Clients({...clients}).save()
     .then(data => res.redirect('/clients'))
     .catch(err => console.log('erro durante a insersão de dados: \n', err))
     else
@@ -43,7 +53,7 @@ router.post('/addOrEdit', (req, res) => {
 //editar
 router.get('/addOrEdit/:id', (req, res) => {
     Clients.findById(req.params.id).lean()
-    .then( data => res.render('clients/addOrEdit', { clients: data }))
+    .then( data => res.render('clients/addOrEdit', { title: "Cadastro de clientes", page: "Editar dados do cliente", clients: data }))
     .catch(err =>
         console.log('Erro ao recuperar dados do id especificado', err))
 })

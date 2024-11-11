@@ -1,30 +1,117 @@
-<div class="col-lg-6">
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">
-                {{#if client._id }}
-                    Editando cliente ID: <span class="badge rounded-pill bg-warning text-dark">{{ client._id }}</span>
-                {{else}}
-                    Inserindo um novo cliente
-                {{/if }}
-            </h5>
-
-            <!-- Horizontal Form -->
-            <form action="/clients/addOrEdit" method="post">
-                <input type="hidden" name="_id" value="{{client._id}}">
-                <div class="row mb-3">
-                    <label for="inputEmail3" class="col-sm-2 col-form-label">Nome</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="title" name="title" placeholder="Título do livro" required value="{{client.name}}">
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-12">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table align-items-center mb-0">
+                        <tr>
+                            <td>
+                                {{#if clients._id }}
+                                    <h6>Editando cliente ID: <span class="badge rounded-pill bg-warning text-dark">{{ clients._id }}</span></h6>
+                                {{else}}
+                                    <h6>{{page}}</h6>
+                                {{/if }}
+                            </td>
+                            <td><a href="/"><button class="btn btn-success">Listar clientes</button></a></td>
+                        </table>
+                        <!-- Horizontal Form -->
+                        <form action="/clients/addOrEdit" method="post">
+                            <input type="hidden" name="_id" value="{{clients._id}}">
+                            <div class="row mb-2">                                                                
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Nome</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Nome" required value="{{clients.name}}">
+                                </div>
+                                <div class="col-sm-4"></div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Email:</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="emailAddress" name="emailAddress" placeholder="Email" required value="{{clients.emailAddress}}">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">CPF:</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="cpf" name="cpf" placeholder="CPF" required value="{{clients.cpf}}">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Telefone(s):</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Telefone" required value="{{clients.phoneNumber}}">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Cliente desde:</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" id="clientSince" name="clientSince" placeholder="Cliente desde" required value="{{clients.clientSince}}">&nbsp;<label for="imputEmail3">(dd/mm/aaaa)</label>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Nascimento:</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" id="birthday" name="birthday" placeholder="Nascimento" value="{{clients.birthday}}">&nbsp;<label for="imputEmail3">(dd/mm/aaaa)</label>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Sexo:</label>
+                                <div class="col-sm-2">
+                                    <div class="input-group date" id="datetimepicker5" data-provide="datepicker">
+                                        <select name="genere" id="genere">
+                                            <option value="Feminino" {{#if_equal clients.genere "Feminino"}} selected {{/if_equal}}>Feminino</option>
+                                            <option value="Masculino" {{#if_equal clients.genere "Masculino"}} selected {{/if_equal}}>Masculino</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Endereço:</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="street" name="street" placeholder="Avenida/Rua/Praça/Quadra" required value="{{clients.address.street}}">
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" id="number" name="number" placeholder="Número" required value="{{clients.address.number}}">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label"></label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="neighborhood" name="neighborhood" placeholder="Bairro" required value="{{clients.address.neighborhood}}">
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="city" name="city" placeholder="Cidade" required value="{{clients.address.city}}">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label"></label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="state" name="state" placeholder="Estado" required value="{{clients.address.state}}">
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="country" name="country" placeholder="País" required value="{{clients.address.country}}">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label"></label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control" id="zipCode" name="zipCode" placeholder="CEP" required value="{{clients.address.zipCode}}">
+                                </div>
+                                <div class="col-sm-5">
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">Salvar</button>
+                                {{#unless clients._id }}
+                                    <button type="reset" class="btn btn-secondary">Limpar</button>
+                                {{/unless}}
+                            </div>
+                        </form><!-- End Horizontal Form -->
                     </div>
                 </div>
-                <div class="text-center">
-                    <button type="submit" class="btn btn-primary">Salvar</button>
-                    {{#unless client._id }}
-                        <button type="reset" class="btn btn-secondary">Limpar</button>
-                    {{/unless}}
-                </div>
-            </form><!-- End Horizontal Form -->
+            </div>         
+          </div>
+         </div>
         </div>
     </div>
- </div>         

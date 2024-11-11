@@ -1,4 +1,3 @@
-
 /* IMPORTAÇÃO DOS MODULSO */
 const express = require('express') // importação do módulo express
 const path = require('path') // importacao do modulo path
@@ -8,6 +7,15 @@ const bodyParser = require ('body-parser') // importação do módulo body-parse
 //importando arquivo do Bd
 const connectDb = require('./bd')
 const clientsRoutes = require('./controllers/clients.controller')
+const employeesRoutes = require('./controllers/employees.controller')
+
+const isEqualHelperHandlerbar = function(a, b, opts) {
+    if (a == b) {
+        return opts.fn(this) 
+    } else { 
+        return opts.inverse(this) 
+    } 
+}
 
 //app
 const app = express()
@@ -16,6 +24,7 @@ app.use(bodyParser.json())
 
 //rotas
 app.use('/clients/', clientsRoutes)
+app.use('/employees/', employeesRoutes)
 
 //configuração das view engine para o handlebar
 app.set('views', path.join(__dirname, 'views'))
@@ -33,14 +42,12 @@ app.engine('.hbs', engine({
     helpers: {
         toJSON : function(object) {
           return JSON.stringify(object);
-        }
+        }, 
+        if_equal : isEqualHelperHandlerbar, 
     }
 }))
 
 app.set('view engine', '.hbs')
-
-//app.use(express.static(path.join(__dirname, 'assets')))
-//console.log(path.join(__dirname, '/assets'))
 
 //habilitar coneão com BD e o servidor da aplicação
 connectDb().then(data => {

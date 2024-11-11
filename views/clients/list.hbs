@@ -2,8 +2,12 @@
       <div class="row">
         <div class="col-12">
           <div class="card mb-4">
-            <div class="card-header pb-0">
-              <h6>{{page}}</h6>
+            <div class="card-header pb-0 col-lg-12">
+              <table class="table align-items-center mb-0">
+                <tr>
+                  <td><h6>{{page}}</h6></td>
+                  <td><a href="/clients/addOrEdit"><button class="btn btn-success">Inserir novo cliente</button></a></td>
+              </table>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
@@ -11,38 +15,105 @@
                   <thead>
                     <tr>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">#</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Name/Email</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nome/Email</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">CPF</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Adimissão</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Cliente desde</th>
                       <th class="text-secondary opacity-7"></th>
                     </tr>
                   </thead>
                   <tbody>
-                    {{#each clients}}
+                    {{#each clients as | client |}}
                     <tr>
                       <td class="align-middle">
-                        <span class="text-secondary text-xs font-weight-bold">{{this._id}}</span>
+                        <span class="text-secondary text-xs font-weight-bold">{{client._id}}</span>
                       </td>
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">{{this.name}}</h6>
-                            <p class="text-xs text-secondary mb-0">{{this.emailAddress}}</p>
+                            <h6 class="mb-0 text-sm">{{client.name}}</h6>
+                            <p class="text-xs text-secondary mb-0">{{client.emailAddress}}</p>
                           </div>
                         </div>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">{{this.cpf}}</p>
+                        <p class="text-xs font-weight-bold mb-0">{{client.cpf}}</p>
                       </td>
                       <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-success">{{this.admissionYear}}</span>
+                        <p class="text-xs font-weight-bold mb-0">{{client.clientSince}}</p>
                       </td>
                       <td class="align-middle">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Edit
-                        </a>
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#modal_{{client._id}}"><i class="fas fa-eye text-dark me-2" aria-hidden="true"></i>Ver</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="/clients/addOrEdit/{{this._id}}"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i> Editar</a>
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#delete{{client._id}}"><i class="fas fa-trash text-dark me-2" aria-hidden="true"></i> Apagar</a>
                       </td>
                     </tr>
+
+                    <div class="modal fade" id="delete{{client._id}}" tabindex="-1">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title">ATENÇÃO!</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            Deseja realemnte excluir o registro: <span class="badge rounded-pill bg-warning text-light">{{client._id}}</span><br>
+                            {{client.name}}?
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-success" data-bs-dismiss="modal">NÃO</button>
+                            <a href="/clients/delete/{{client._id}}">
+                              <button type="button" class="btn btn-danger">SIM</button>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div><!-- End Basic Modal-->
+                      <!-- Modal -->
+                      <div class="modal fade" id="modal_{{client._id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h1 class="modal-title fs-5" id="exampleModalLabel">Módulo de Cliente</h1>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <div class="col-md-12 mt-4">
+                                <div class="card">
+                                  <div class="card-header pb-0 px-3">
+                                    <h6 class="mb-0">Informações do Cliente</h6>
+                                  </div>
+                                  <div class="card-body pt-4 p-3">
+                                    <ul class="list-group">
+                                      <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
+                                        <div class="d-flex flex-column">
+                                          <h6 class="mb-3 text-sm">{{client.name}}</h6>
+                                          <span class="mb-2 text-xs">Email: <span class="text-dark font-weight-bold ms-sm-2">{{client.emailAddress}}</span></span>
+                                          <span class="mb-2 text-xs">CPF: <span class="text-dark ms-sm-2 font-weight-bold">{{client.cpf}}</span></span>
+                                          <span class="mb-2 text-xs">Nascimento: <span class="text-dark ms-sm-2 font-weight-bold">{{client.birthday}}</span></span>
+                                          <span class="mb-2 text-xs">Sexo: <span class="text-dark ms-sm-2 font-weight-bold">{{client.genere}}</span></span>
+                                          <span class="mb-2 text-xs">Cliente desde: <span class="text-dark ms-sm-2 font-weight-bold">{{client.clientSince}}</span></span>
+                                          <span class="mb-2 text-xs">Telefone(s): <span class="text-dark ms-sm-2 font-weight-bold">{{client.phoneNumber}}</span></span>
+                                          <span class="text-xs">Endereço: <span class="text-dark ms-sm-2 font-weight-bold">
+                                            {{client.address.street}}, {{client.address.number}}<br />
+                                            <span style="padding-left:67px;">{{client.address.neighborhood}}</span><br />
+                                            <span style="padding-left:67px;">{{client.address.city}} / {{this.address.state}}</span><br />
+                                            <span style="padding-left:67px;">{{client.address.zipCode}}</span><br />
+                                            <span style="padding-left:67px;">{{client.address.country}}</span><br />
+                                          </span></span>
+                                        </div>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
                     {{/each}}
                   </tbody>
                 </table>

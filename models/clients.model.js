@@ -6,6 +6,15 @@ module.exports = mongoose.model('clients', {
     emailAddress: String,
     birthday: String, 
     genere: String, 
-    admissionYear: Number,
+    clientSince: String,
     phoneNumber: String, 
+    address: {
+       street: String,
+       number: String, 
+       city: String, 
+       zipCode: String, 
+       state: String,
+       country: String,
+       neighborhood: String,
+    }
 })

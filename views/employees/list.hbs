@@ -1,0 +1,132 @@
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-12">
+          <div class="card mb-4">
+            <div class="card-header pb-0 col-lg-12">
+              <table class="table align-items-center mb-0">
+                <tr>
+                  <td><h6>{{page}}</h6></td>
+                  <td><a href="/employees/addOrEdit"><button class="btn btn-success">Inserir novo funcionário</button></a></td>
+              </table>
+            </div>
+            <div class="card-body px-0 pt-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">#</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nome/Email</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Função</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">CPF</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Admissão</th>
+                      <th class="text-secondary opacity-7"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {{#each employees as | employee |}}
+                    <tr>
+                      <td class="align-middle">
+                        <span class="text-secondary text-xs font-weight-bold">{{employee._id}}</span>
+                      </td>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">{{employee.name}}</h6>
+                            <p class="text-xs text-secondary mb-0">{{employee.emailAddress}}</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">{{employee.cpf}}</p>
+                      </td>
+                      <td class="align-middle text-center text-sm">
+                        <p class="text-xs font-weight-bold mb-0">{{employee.function}}</p>
+                      </td>
+                      <td class="align-middle text-center text-sm">
+                        <p class="text-xs font-weight-bold mb-0">{{employee.admissionDate}}</p>
+                      </td>
+                      <td class="align-middle">
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#modal_{{employee._id}}"><i class="fas fa-eye text-dark me-2" aria-hidden="true"></i>Ver</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="/employees/addOrEdit/{{employee._id}}"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i> Editar</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#delete{{employee._id}}"><i class="fas fa-trash text-dark me-2" aria-hidden="true"></i> Apagar</a>
+                      </td>
+                    </tr>
+
+                    <div class="modal fade" id="delete{{employee._id}}" tabindex="-1">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title">ATENÇÃO!</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            Deseja realemnte excluir o registro: <span class="badge rounded-pill bg-warning text-light">{{employee._id}}</span><br>
+                            {{employee.name}}?
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-success" data-bs-dismiss="modal">NÃO</button>
+                            <a href="/employees/delete/{{employee._id}}">
+                              <button type="button" class="btn btn-danger">SIM</button>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div><!-- End Basic Modal-->
+
+                      <!-- Modal -->
+                      <div class="modal fade" id="modal_{{employee._id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h1 class="modal-title fs-5" id="exampleModalLabel">Módulo de Funcionários</h1>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <div class="col-md-12 mt-4">
+                                <div class="card">
+                                  <div class="card-header pb-0 px-3">
+                                    <h6 class="mb-0">Informações do funcionário</h6>
+                                  </div>
+                                  <div class="card-body pt-4 p-3">
+                                    <ul class="list-group">
+                                      <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
+                                        <div class="d-flex flex-column">
+                                          <h6 class="mb-3 text-sm">{{employee.name}}</h6>
+                                          <span class="mb-2 text-xs">Email: <span class="text-dark font-weight-bold ms-sm-2">{{employee.emailAddress}}</span></span>
+                                          <span class="mb-2 text-xs">CPF: <span class="text-dark ms-sm-2 font-weight-bold">{{employee.cpf}}</span></span>
+                                          <span class="mb-2 text-xs">Nascimento: <span class="text-dark ms-sm-2 font-weight-bold">{{employee.birthday}}</span></span>
+                                          <span class="mb-2 text-xs">Sexo: <span class="text-dark ms-sm-2 font-weight-bold">{{employee.genere}}</span></span>
+                                          <span class="mb-2 text-xs">Admissão: <span class="text-dark ms-sm-2 font-weight-bold">{{employee.admissionDate}}</span></span>
+                                          <span class="mb-2 text-xs">Telefone(s): <span class="text-dark ms-sm-2 font-weight-bold">{{employee.phoneNumber}}</span></span>
+                                          <span class="mb-2 text-xs">Função: <span class="text-dark ms-sm-2 font-weight-bold">{{employee.function}}</span></span>
+                                          <span class="mb-2 text-xs">PIS: <span class="text-dark ms-sm-2 font-weight-bold">{{employee.socialSecurity}}</span></span>
+                                          <span class="text-xs">Endereço: <span class="text-dark ms-sm-2 font-weight-bold">
+                                            {{employee.address.street}}, {{employee.address.number}}<br />
+                                            <span style="padding-left:67px;">{{employee.address.neighborhood}}</span><br />
+                                            <span style="padding-left:67px;">{{employee.address.city}} / {{employee.address.state}}</span><br />
+                                            <span style="padding-left:67px;">{{employee.address.zipCode}}</span><br />
+                                            <span style="padding-left:67px;">{{employee.address.country}}</span><br />
+                                          </span></span>
+                                        </div>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    {{/each}}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
