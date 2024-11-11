@@ -38,7 +38,7 @@ router.post('/addOrEdit', (req, res) => {
                 }
     }
 
-    console.log(clients)
+    //console.log(clients)
     const { _id} = req.body
     if(_id == '')
         new Clients({...clients}).save()

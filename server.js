@@ -8,6 +8,7 @@ const bodyParser = require ('body-parser') // importação do módulo body-parse
 const connectDb = require('./bd')
 const clientsRoutes = require('./controllers/clients.controller')
 const employeesRoutes = require('./controllers/employees.controller')
+const servicesRoutes = require('./controllers/services.controller')
 
 const isEqualHelperHandlerbar = function(a, b, opts) {
     if (a == b) {
@@ -25,6 +26,7 @@ app.use(bodyParser.json())
 //rotas
 app.use('/clients/', clientsRoutes)
 app.use('/employees/', employeesRoutes)
+app.use('/services/', servicesRoutes)
 
 //configuração das view engine para o handlebar
 app.set('views', path.join(__dirname, 'views'))

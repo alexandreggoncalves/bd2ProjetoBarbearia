@@ -1,0 +1,63 @@
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-12">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table align-items-center mb-0">
+                        <tr>
+                            <td>
+                                {{#if services._id }}
+                                    <h6>Editando serviço ID: <span class="badge bg-success text-dark">{{ services._id }}</span></h6>
+                                {{else}}
+                                    <h6>{{page}}</h6>
+                                {{/if }}
+                            </td>
+                            <td><a href="/services"><button class="btn btn-success">Listar serviços</button></a></td>
+                        </table>
+                        <!-- Horizontal Form -->
+                        <form action="/services/addOrEdit" method="post">
+                            <input type="hidden" name="_id" value="{{services._id}}">
+                            <div class="row mb-2">                                                                
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Nome</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Nome" required value="{{services.name}}">
+                                </div>
+                                <div class="col-sm-4"></div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Tempo:</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="time" name="time" placeholder="Tempo de execução em minutos" required value="{{services.time}}">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Preço:</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="price" name="price" placeholder="Preço, decimal separado por (.)" required value="{{services.price}}">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Descrição</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="description" name="description" placeholder="Descrição do serviço" required value="{{services.description}}">
+                                </div>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" name="active" id="active" {{#if_equal services.active "on"}} checked {{/if_equal}}>
+                                <label class="custom-control-label" for="customCheck1">Marque para ativar o serviço</label>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">Salvar</button>
+                                {{#unless services._id }}
+                                    <button type="reset" class="btn btn-secondary">Limpar</button>
+                                {{/unless}}
+                            </div>
+                        </form><!-- End Horizontal Form -->
+                    </div>
+                </div>
+            </div>         
+          </div>
+         </div>
+        </div>
+    </div>

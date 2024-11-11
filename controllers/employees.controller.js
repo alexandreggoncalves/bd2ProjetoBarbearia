@@ -39,7 +39,7 @@ router.post('/addOrEdit', (req, res) => {
                 }
     }
 
-    console.log(employees)
+    //console.log(employees)
     const { _id} = req.body
     if(_id == '')
         new Employees({...employees}).save()
