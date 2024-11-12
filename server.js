@@ -2,10 +2,20 @@
 const express = require('express') // importação do módulo express
 const path = require('path') // importacao do modulo path
 const { engine, ExpressHandlebars } = require('express-handlebars') // importação do módulo handlebars
-const bodyParser = require ('body-parser') // importação do módulo body-parser
+const bodyParser = require('body-parser') // importação do módulo body-parser
+const cors = require('cors')
+const cookieParser = require('cookie-parser')
 
 //importando arquivo do Bd
 const connectDb = require('./bd')
+
+// controllers de login e logout
+const usersLogin = require('./controllers/users.login.controller')
+const usersLoged = require('./controllers/users.loged.controller')
+const usersLogout = require('./controllers/users.logout.controller')
+
+// controllers dos módulos so sistema
+const dashboardRoutes = require('./controllers/dashboard.controller')
 const clientsRoutes = require('./controllers/clients.controller')
 const employeesRoutes = require('./controllers/employees.controller')
 const servicesRoutes = require('./controllers/services.controller')
@@ -20,10 +30,13 @@ const isEqualHelperHandlerbar = function(a, b, opts) {
 
 //app
 const app = express()
+app.use(cors())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
+app.use(cookieParser());
 
 //rotas
+app.use('/dashboard/', dashboardRoutes)
 app.use('/clients/', clientsRoutes)
 app.use('/employees/', employeesRoutes)
 app.use('/services/', servicesRoutes)
@@ -62,6 +75,15 @@ connectDb().then(data => {
 })
 .catch(err => console.log('>> Não foi possível conecta ao Bd" \n', err))
 
+// rotas de login e logour
+app.post('/users/login', async(req, res) => {
+    res.send(await usersLogin())
+})
+
+app.get('/users/logout', async(req, res) => {
+    res.send(await usersLogout())
+})
+
 app.get('/', (req, res) => {
-    res.redirect('/clients')
+    res.redirect('/dashboard')
 })
