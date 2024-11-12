@@ -1,10 +1,11 @@
 const express = require('express') // importando o modulo express
 const router = express.Router()
+const usersLogedRoutes = require('../controllers/users.loged.controller')
 const Clients = require('../models/clients.model') // importação do model
 //const { title } = require('process')
 
 // consulta
-router.get('/', (req, res) => { 
+router.get('/', usersLogedRoutes, (req, res) => { 
     Clients.find().lean()
     .then(data => {
         res.render('clients/list', { title: "Cadastro de clientes", page: "Listar clientes cadastrados", clients: data})

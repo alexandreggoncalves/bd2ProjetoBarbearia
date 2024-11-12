@@ -3,16 +3,14 @@ const express = require('express') // importação do módulo express
 const path = require('path') // importacao do modulo path
 const { engine, ExpressHandlebars } = require('express-handlebars') // importação do módulo handlebars
 const bodyParser = require('body-parser') // importação do módulo body-parser
-const cors = require('cors')
 const cookieParser = require('cookie-parser')
 
 //importando arquivo do Bd
 const connectDb = require('./bd')
 
 // controllers de login e logout
-const usersLogin = require('./controllers/users.login.controller')
-const usersLoged = require('./controllers/users.loged.controller')
-const usersLogout = require('./controllers/users.logout.controller')
+const usersLoginRoutes = require('./controllers/users.login.controller')
+const usersLogedRoutes = require('./controllers/users.loged.controller')
 
 // controllers dos módulos so sistema
 const dashboardRoutes = require('./controllers/dashboard.controller')
@@ -30,13 +28,13 @@ const isEqualHelperHandlerbar = function(a, b, opts) {
 
 //app
 const app = express()
-app.use(cors())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
-app.use(cookieParser());
+app.use(cookieParser())
 
 //rotas
 app.use('/dashboard/', dashboardRoutes)
+app.use('/users/',usersLoginRoutes)
 app.use('/clients/', clientsRoutes)
 app.use('/employees/', employeesRoutes)
 app.use('/services/', servicesRoutes)
@@ -75,15 +73,24 @@ connectDb().then(data => {
 })
 .catch(err => console.log('>> Não foi possível conecta ao Bd" \n', err))
 
-// rotas de login e logour
-app.post('/users/login', async(req, res) => {
-    res.send(await usersLogin())
+app.get('/login', async (req, res) => {
+    const msgClass = req.cookies.msgClass
+    const message = req.cookies.message
+    res.render('users/login', { title: "Login", page: "Login", login: true, msgClass: msgClass, message: message})
 })
 
-app.get('/users/logout', async(req, res) => {
-    res.send(await usersLogout())
-})
-
-app.get('/', (req, res) => {
+app.get('/logout', async(req, res) => {
+    res.clearCookie('auth')
+    res.clearCookie('token')
     res.redirect('/dashboard')
 })
+
+app.get('/', usersLogedRoutes, (req, res) => {
+    res.redirect('/dashboard')
+})
+
+/* // utilizado para gerar uma senha para o primeiro usuário
+const saltRounds = 10;
+bcrypt.hash('123qwe', saltRounds, function (err,   hash) {
+    console.log(hash)
+})*/

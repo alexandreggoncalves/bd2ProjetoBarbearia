@@ -35,17 +35,18 @@
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
-  <div class="min-height-300 bg-dark position-absolute w-100"></div>
-  
-{{> navbar }}
+    {{#unless login}}
+      <div class="min-height-300 bg-dark position-absolute w-100"></div>
+      {{> navbar }}
+    {{/unless}}
 
 
-  <main class="main-content position-relative border-radius-lg ">
-    
-    {{> header}}
-
-    {{{ body }}}
-
+    <main class="main-content position-relative border-radius-lg ">
+      {{#unless login}}
+        {{> header}}
+      {{/unless}}
+      
+      {{{ body }}}
   </main>
   <!--   Core JS Files   -->
   <script src="/static/js/core/popper.min.js"></script>

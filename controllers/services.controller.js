@@ -1,10 +1,11 @@
 const express = require('express') // importando o modulo express
 const router = express.Router()
+const usersLogedRoutes = require('../controllers/users.loged.controller')
 const Services = require('../models/services.model') // importação do model
 //const { title } = require('process')
 
 // consulta
-router.get('/', (req, res) => { 
+router.get('/', usersLogedRoutes, (req, res) => { 
     Services.find().lean()
     .then(data => {
         res.render('services/list', { title: "Cadastro de serviços", page: "Listar serviços cadastrados", services: data})

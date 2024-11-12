@@ -1,0 +1,49 @@
+  <div class="container position-sticky z-index-sticky top-0">
+    <div class="row">
+      <div class="col-12">
+        <main class="main-content  mt-0">
+          <section>
+            <div class="page-header min-vh-100">
+              <div class="container">
+                <div class="row">
+                  <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
+                    <div class="card card-plain">
+                      <div class="card-header pb-0 text-start">
+                        <h4 class="font-weight-bolder">Acesso ao Sistema</h4>
+                        <p class="mb-0">Insira seu email e senha para entar.</p>
+                      </div>
+                      <div class="card-body">
+                        <form role="form" action="users/login" method="post">
+                          <div class="mb-3">
+                            <input type="email" class="form-control form-control-lg" placeholder="Email" name="userEmail" id="userEmail" aria-label="Email">
+                          </div>
+                          <div class="mb-3">
+                            <input type="password" class="form-control form-control-lg" placeholder="Senha" aria-label="Senha" name="userPassword" id="userPassword">
+                          </div>
+                          <div class="text-center">
+                            <button type="submit" class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Entar</button>
+                          </div>
+                          {{#if message}}
+                          <br>
+                            <div class="alert alert-{{msgClass}}" role="alert">
+                                <span class="text-light">{{message}}</span>
+                            </div>
+                          {{/if}}
+                        </form>
+                      </div>
+                      <div class="card-footer text-center pt-0 px-lg-2 px-1">
+                        <p class="mb-4 text-sm mx-auto">
+                          Não tem uma conta?
+                          <a href="javascript:;" class="text-primary text-gradient font-weight-bold">Cadastrar</a>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+  </div>
