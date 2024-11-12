@@ -2,8 +2,6 @@ const express = require('express') // importando o modulo express
 const jwt = require('jsonwebtoken')
 
 async function usersLoged(req, res, next) {
-    // pega os cookies do navegador
-    //const authHeader = req.headers.cookie.Token
     //console.log(req.cookies)
 
     // verifica se o cookie exite 

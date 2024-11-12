@@ -23,18 +23,25 @@ router.post('/login', async (req, res) => {
             res.cookie('message', 'Erro! Senha inválida.')
             res.redirect('/login')
         } else {
-            const userID = user._id
+            if( user.userActive == 'on' ) {
+                const userID = user._id
 
-            try{
-                const secret = process.env.SECRET
-                const token = jwt.sign({ userID }, secret, { expiresIn: 86400}) // token para expirar em 24h
-                
-                res.cookie('auth', true)
-                res.cookie('token', token)
-                res.redirect('/dashboard')
-            } catch(error) {
+                try{
+                    const secret = process.env.SECRET
+                    const token = jwt.sign({ userID }, secret, { expiresIn: 86400}) // token para expirar em 24h
+        
+                    res.cookie('auth', true)
+                    res.cookie('token', token)
+                    res.cookie('firstName', user.firstName)
+                    res.redirect('/dashboard')
+                } catch(error) {
+                    res.cookie('msgClass', 'warning')
+                    res.cookie('message', 'Opss! Não foi possivel conectar, tente mais tarde.')
+                    res.redirect('/login')
+                }
+            } else {
                 res.cookie('msgClass', 'warning')
-                res.cookie('message', 'Opss! Não foi possivel conectar, tente mais tarde.')
+                res.cookie('message', 'Opss! Seu usuário foi desativado, contate o administrador.')
                 res.redirect('/login')
             }
         }

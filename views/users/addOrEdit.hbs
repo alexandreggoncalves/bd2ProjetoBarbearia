@@ -1,0 +1,65 @@
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-12">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table align-items-center mb-0">
+                        <tr>
+                            <td>
+                                {{#if services._id }}
+                                    <h6>Editando usuário ID: <span class="badge bg-success text-dark">{{ users._id }}</span></h6>
+                                {{else}}
+                                    <h6>{{page}}</h6>
+                                {{/if }}
+                            </td>
+                            <td><a href="/users"><button class="btn btn-success">Listar usuários</button></a></td>
+                        </table>
+                        <!-- Horizontal Form -->
+                        <form action="/users/addOrEdit" method="post">
+                            <input type="hidden" name="_id" value="{{users._id}}">
+                            <div class="row mb-2">                                                                
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Primeiro nome</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Primeiro nome" required value="{{users.firstName}}">
+                                </div>
+                                <div class="col-sm-4"></div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Sobrenome:</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Sobrenome" required value="{{users.lastName}}">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Email:</label>
+                                <div class="col-sm-6">
+                                    <input type="email" class="form-control" id="userEmail" name="userEmail" placeholder="Email" value="{{users.userEmail}}">
+                                </div>
+                            </div>
+                            {{#unless users._id }}
+                            <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Senha:</label>
+                                <div class="col-sm-2">
+                                    <input type="password" class="form-control" id="userPassword" name="userPassword" placeholder="Senha" value="{{users.password}}">
+                                </div>
+                            </div>
+                            {{/unless}}
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" name="userActive" id="userActive" {{#if_equal users.userActive "on"}} checked {{/if_equal}}>
+                                <label class="custom-control-label" for="customCheck1">Marque para ativar o usuário</label>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">Salvar</button>
+                                {{#unless users._id }}
+                                    <button type="reset" class="btn btn-secondary">Limpar</button>
+                                {{/unless}}
+                            </div>
+                        </form><!-- End Horizontal Form -->
+                    </div>
+                </div>
+            </div>         
+          </div>
+         </div>
+        </div>
+    </div>

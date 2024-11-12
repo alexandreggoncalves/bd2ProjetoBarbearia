@@ -14,6 +14,7 @@ const usersLogedRoutes = require('./controllers/users.loged.controller')
 
 // controllers dos módulos so sistema
 const dashboardRoutes = require('./controllers/dashboard.controller')
+const usersRoutes = require('./controllers/users.controller')
 const clientsRoutes = require('./controllers/clients.controller')
 const employeesRoutes = require('./controllers/employees.controller')
 const servicesRoutes = require('./controllers/services.controller')
@@ -35,6 +36,7 @@ app.use(cookieParser())
 //rotas
 app.use('/dashboard/', dashboardRoutes)
 app.use('/users/',usersLoginRoutes)
+app.use('/users/', usersRoutes)
 app.use('/clients/', clientsRoutes)
 app.use('/employees/', employeesRoutes)
 app.use('/services/', servicesRoutes)

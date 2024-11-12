@@ -5,21 +5,23 @@ const Employees = require('../models/employees.model') // importação do model
 
 // consulta
 router.get('/', usersLogedRoutes, (req, res) => { 
+    const firstName = req.cookies.firstName
     Employees.find().lean()
     .then(data => {
-        res.render('employees/list', { title: "Cadastro de funcionários", page: "Listar funcionários cadastrados", employees: data})
+        res.render('employees/list', { firstName: firstName, title: "Cadastro de funcionários", page: "Listar funcionários cadastrados", employees: data})
     })
     .catch(err => 
         console.log('erro ao processar a operação: \n', err)
     )
 })
 
-router.get('/addOrEdit', (req, res) => {
-    res.render('employees/addOrEdit', { title: "Cadastro de funcionários", page: "Inseir novo funcionário" })
+router.get('/addOrEdit', usersLogedRoutes, (req, res) => {
+    const firstName = req.cookies.firstName
+    res.render('employees/addOrEdit', { firstName: firstName, title: "Cadastro de funcionários", page: "Inseir novo funcionário" })
 })
 
 // inserir
-router.post('/addOrEdit', (req, res) => {
+router.post('/addOrEdit', usersLogedRoutes, (req, res) => {
     const employees = {
         name: req.body.name,
         cpf: req.body.cpf, 
@@ -53,15 +55,16 @@ router.post('/addOrEdit', (req, res) => {
 })
 
 //editar
-router.get('/addOrEdit/:id', (req, res) => {
+router.get('/addOrEdit/:id', usersLogedRoutes, (req, res) => {
+    const firstName = req.cookies.firstName
     Employees.findById(req.params.id).lean()
-    .then( data => res.render('employees/addOrEdit', { title: "Cadastro de funcionários", page: "Editar dados do funcionário", employees: data }))
+    .then( data => res.render('employees/addOrEdit', { firstName: firstName, title: "Cadastro de funcionários", page: "Editar dados do funcionário", employees: data }))
     .catch(err =>
         console.log('Erro ao recuperar dados do id especificado', err))
 })
 
 //rota delete
-router.get('/delete/:id', (req, res) => {
+router.get('/delete/:id', usersLogedRoutes, (req, res) => {
     Employees.findByIdAndDelete(req.params.id)
     .then(data => res.redirect('/employees'))
     .catch(err => console.log('erro ao remover o registro:\n', err))

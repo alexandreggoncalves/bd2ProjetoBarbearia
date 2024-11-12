@@ -6,21 +6,23 @@ const Clients = require('../models/clients.model') // importação do model
 
 // consulta
 router.get('/', usersLogedRoutes, (req, res) => { 
+    const firstName = req.cookies.firstName
     Clients.find().lean()
     .then(data => {
-        res.render('clients/list', { title: "Cadastro de clientes", page: "Listar clientes cadastrados", clients: data})
+        res.render('clients/list', { firstName: firstName, title: "Cadastro de clientes", page: "Listar clientes cadastrados", clients: data})
     })
     .catch(err => 
         console.log('erro ao processar a operação: \n', err)
     )
 })
 
-router.get('/addOrEdit', (req, res) => {
-    res.render('clients/addOrEdit', { title: "Cadastro de clientes", page: "Inseir novo cliente" })
+router.get('/addOrEdit', usersLogedRoutes, (req, res) => {
+    const firstName = req.cookies.firstName
+    res.render('clients/addOrEdit', { firstName: firstName, title: "Cadastro de clientes", page: "Inseir novo cliente" })
 })
 
 // inserir
-router.post('/addOrEdit', (req, res) => {
+router.post('/addOrEdit', usersLogedRoutes, (req, res) => {
     const clients = {
         name: req.body.name,
         emailAddress: req.body.emailAddress,
@@ -52,15 +54,16 @@ router.post('/addOrEdit', (req, res) => {
 })
 
 //editar
-router.get('/addOrEdit/:id', (req, res) => {
+router.get('/addOrEdit/:id', usersLogedRoutes, (req, res) => {
+    const firstName = req.cookies.firstName
     Clients.findById(req.params.id).lean()
-    .then( data => res.render('clients/addOrEdit', { title: "Cadastro de clientes", page: "Editar dados do cliente", clients: data }))
+    .then( data => res.render('clients/addOrEdit', { firstName: firstName, title: "Cadastro de clientes", page: "Editar dados do cliente", clients: data }))
     .catch(err =>
         console.log('Erro ao recuperar dados do id especificado', err))
 })
 
 //rota delete
-router.get('/delete/:id', (req, res) => {
+router.get('/delete/:id', usersLogedRoutes, (req, res) => {
     Clients.findByIdAndDelete(req.params.id)
     .then(data => res.redirect('/clients'))
     .catch(err => console.log('erro ao remover o registro:\n', err))

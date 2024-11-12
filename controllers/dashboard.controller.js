@@ -5,7 +5,8 @@ const router = express.Router()
 
 // consulta
 router.get('/', usersLogedRoutes, (req, res) => { 
-    res.render('dashboard/dashboard', { title: "Dashboard", page: "Dashboard"})
+    const firstName = req.cookies.firstName
+    res.render('dashboard/dashboard', { firstName: firstName, title: "Dashboard", page: "Dashboard"})
 })
 
 module.exports = router
