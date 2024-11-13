@@ -9,7 +9,7 @@ router.post('/login', async (req, res) => {
     
     // verificar se usuário existe
     const user = await Users.findOne({userEmail: userEmail})
-    console.log(user)
+    //console.log(user)
     if(!user) {
         res.cookie('msgClass', 'danger')
         res.cookie('message', 'Erro! Usuário não encontrado.')
