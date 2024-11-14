@@ -1,6 +1,7 @@
-npm init -y
-npm i express
-npm i express-handlebars
-npm i body-parser
-npm i mongoose
-npm i nodemon
+npm init -y <br>
+npm i express <br>
+npm i express-handlebars <br>
+npm i body-parser <br>
+npm i mongoose <br>
+npm i nodemon <br>
+
