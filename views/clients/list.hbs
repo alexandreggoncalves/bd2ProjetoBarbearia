@@ -31,15 +31,15 @@
                         <div class="d-flex px-2 py-1">
                           <div class="d-flex flex-column justify-content-center">
                             <h6 class="mb-0 text-sm">{{client.name}}</h6>
-                            <p class="text-xs text-secondary mb-0">{{client.emailAddress}}</p>
+                            <p class="text-sm text-secondary mb-0">{{client.emailAddress}}</p>
                           </div>
                         </div>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">{{client.cpf}}</p>
+                        <p class="text-sm font-weight-bold mb-0">{{client.cpf}}</p>
                       </td>
                       <td class="align-middle text-center text-sm">
-                        <p class="text-xs font-weight-bold mb-0">{{client.clientSince}}</p>
+                        <p class="text-sm font-weight-bold mb-0">{{client.clientSince}}</p>
                       </td>
                       <td class="align-middle">
                         <a href="#" data-bs-toggle="modal" data-bs-target="#modal_{{client._id}}"><i class="fas fa-eye text-dark me-2" aria-hidden="true"></i>Ver</a>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -87,12 +87,12 @@
                                       <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
                                         <div class="d-flex flex-column">
                                           <h6 class="mb-3 text-sm">{{client.name}}</h6>
-                                          <span class="mb-2 text-xs">Email: <span class="text-dark font-weight-bold ms-sm-2">{{client.emailAddress}}</span></span>
-                                          <span class="mb-2 text-xs">CPF: <span class="text-dark ms-sm-2 font-weight-bold">{{client.cpf}}</span></span>
-                                          <span class="mb-2 text-xs">Nascimento: <span class="text-dark ms-sm-2 font-weight-bold">{{client.birthday}}</span></span>
-                                          <span class="mb-2 text-xs">Sexo: <span class="text-dark ms-sm-2 font-weight-bold">{{client.genere}}</span></span>
-                                          <span class="mb-2 text-xs">Cliente desde: <span class="text-dark ms-sm-2 font-weight-bold">{{client.clientSince}}</span></span>
-                                          <span class="mb-2 text-xs">Telefone(s): <span class="text-dark ms-sm-2 font-weight-bold">{{client.phoneNumber}}</span></span>
+                                          <span class="mb-2 text-sm">Email: <span class="text-dark font-weight-bold ms-sm-2">{{client.emailAddress}}</span></span>
+                                          <span class="mb-2 text-sm">CPF: <span class="text-dark ms-sm-2 font-weight-bold">{{client.cpf}}</span></span>
+                                          <span class="mb-2 text-sm">Nascimento: <span class="text-dark ms-sm-2 font-weight-bold">{{client.birthday}}</span></span>
+                                          <span class="mb-2 text-sm">Sexo: <span class="text-dark ms-sm-2 font-weight-bold">{{client.genere}}</span></span>
+                                          <span class="mb-2 text-sm">Cliente desde: <span class="text-dark ms-sm-2 font-weight-bold">{{client.clientSince}}</span></span>
+                                          <span class="mb-2 text-sm">Telefone(s): <span class="text-dark ms-sm-2 font-weight-bold">{{client.phoneNumber}}</span></span>
                                           <span class="text-xs">Endereço: <span class="text-dark ms-sm-2 font-weight-bold">
                                             {{client.address.street}}, {{client.address.number}}<br />
                                             <span style="padding-left:67px;">{{client.address.neighborhood}}</span><br />

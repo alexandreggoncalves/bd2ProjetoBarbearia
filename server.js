@@ -18,6 +18,7 @@ const usersRoutes = require('./controllers/users.controller')
 const clientsRoutes = require('./controllers/clients.controller')
 const employeesRoutes = require('./controllers/employees.controller')
 const servicesRoutes = require('./controllers/services.controller')
+const schendulesRoutes = require('./controllers/schendules.controller')
 
 const isEqualHelperHandlerbar = function(a, b, opts) {
     if (a == b) {
@@ -40,6 +41,7 @@ app.use('/users/', usersRoutes)
 app.use('/clients/', clientsRoutes)
 app.use('/employees/', employeesRoutes)
 app.use('/services/', servicesRoutes)
+app.use('/schendules/', schendulesRoutes)
 
 //configuração das view engine para o handlebar
 app.set('views', path.join(__dirname, 'views'))
@@ -58,8 +60,35 @@ app.engine('.hbs', engine({
         toJSON : function(object) {
           return JSON.stringify(object);
         }, 
+        dateFormatBR: function(context, options) {
+            var day = context.getDate() 
+            if ( day < 10 )  {
+                day = '0' + day
+            }
+
+            var month = ( context.getMonth() + 1 )
+            if ( month < 10 )  {
+                month = '0' + month
+            }
+
+            var hours = context.getHours() 
+            if ( hours < 10 )  {
+                hours = '0' + hours
+            }
+
+            var minutes = context.getMinutes() 
+            if ( minutes < 10 )  {
+                minutes = '0' + minutes
+            }
+
+            var data = day + '/' + month + '/' + context.getFullYear() + '   ' + hours + ':' + minutes
+
+            return data
+        },
+
         if_equal : isEqualHelperHandlerbar, 
     }
+    
 }))
 
 app.set('view engine', '.hbs')

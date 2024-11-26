@@ -1,0 +1,83 @@
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-12">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table align-items-center mb-0">
+                        <tr>
+                            <td>
+                                {{#if schendules._id }}
+                                    <h6>Editando serviço ID: <span class="badge bg-success text-dark">{{ schendules._id }}</span></h6>
+                                {{else}}
+                                    <h6>{{page}}</h6>
+                                {{/if }}
+                            </td>
+                            <td><a href="/schendules"><button class="btn btn-success">Listar agendamentos</button></a></td>
+                        </table>
+                        <!-- Horizontal Form -->
+                        <form action="/schendules/addOrEdit" method="post">
+                            <input type="hidden" name="_id" value="{{schendules._id}}">
+                            <div class="row mb-2">                                                                
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Cliente</label>
+                                <div class="col-sm-6">
+                                    <select class="form-control" name="clients_id" id="clients_id">
+                                        <option value="">--- selecione um cliente ---</option>
+                                        {{#each dataClients as | client |}}
+                                            <option value="{{client._id}}">{{client.name}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                                <div class="col-sm-4"></div>
+                            </div>
+                            <div class="row mb-2">                                                                
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Serviço</label>
+                                <div class="col-sm-6">
+                                    <select class="form-control" name="services_id" id="services_id">
+                                        <option value="">--- selecione um serviço ---</option>
+                                        {{#each dataServices as | service |}}
+                                            <option value="{{service._id}}">{{service.name}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                                <div class="col-sm-4"></div>
+                            </div>
+                            <div class="row mb-2">                                                                
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Funcionário</label>
+                                <div class="col-sm-6">
+                                    <select class="form-control" name="employees_id" id="employees_id">
+                                        <option value="">--- selecione um funcionário ---</option>
+                                        {{#each dataEmployees as | employe |}}
+                                            <option value="{{employe._id}}">{{employe.name}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                                <div class="col-sm-4"></div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Data:</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" id="schenduleDate" name="schenduleDate" placeholder="Data" value="">&nbsp;<label for="imputEmail3">(dd/mm/aaaa)</label>
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" id="schenduleTime" name="schenduleTime" placeholder="Hora" value="">&nbsp;<label for="imputEmail3">(hh:mm)</label>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Observação:</label>
+                                <div class="col-sm-4">
+                                    <textarea class="form-control" name="observation" id="observation" rows="8">
+                                    </textarea>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">Salvar</button>
+                            </div>
+                        </form><!-- End Horizontal Form -->
+                    </div>
+                </div>
+            </div>         
+          </div>
+         </div>
+        </div>
+    </div>
