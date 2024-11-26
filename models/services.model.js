@@ -5,5 +5,6 @@ module.exports = mongoose.model('services', {
     time: Number, 
     price: Number,
     description: String,
-    active: String,
+    active: String, 
+    siteActive: String, 
 })

@@ -7,6 +7,7 @@ module.exports = mongoose.model('schendules', {
     clients_id: mongoose.Types.ObjectId,
     services_id: mongoose.Types.ObjectId, 
     employees_id: mongoose.Types.ObjectId,
+    time: Number, 
     startDate: Date, 
     finishDate: Date, 
     observation: String,

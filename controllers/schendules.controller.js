@@ -59,13 +59,14 @@ router.post('/addOrEdit', usersLogedRoutes, (req, res) => {
     const time = new Date(dateToTime)
     const timeSTMP = time.getTime()
     
-    
+    var id_time = req.body.services_id.split('_')    
     const schendules = {
         clients_id: req.body.clients_id,
-        services_id: req.body.services_id,
+        services_id: id_time[0],
+        time: id_time[1],
         employees_id: req.body.employees_id, 
         startDate : timeSTMP, 
-        finishDate : (timeSTMP + (((60*1000)*60)-1000)), // transforma em timestramp e remove 1 segundo no tempo final.
+        finishDate : (timeSTMP + (((60*1000)*id_time[1])-1000)), // transforma em timestramp e remove 1 segundo no tempo final.
         observation: req.body.observation,
     }
 

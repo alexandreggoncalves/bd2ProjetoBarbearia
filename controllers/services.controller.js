@@ -28,12 +28,18 @@ router.post('/addOrEdit', usersLogedRoutes, (req, res) => {
         active = req.body.active
     }
 
+    var siteActive = '';
+    if ( req.body.siteActive ) {
+        siteActive = req.body.siteActive
+    }
+
     const services = {
         name: req.body.name,
         time: req.body.time,
         price: req.body.price, 
         description: req.body.description, 
         active: active, 
+        siteActive: siteActive, 
     }
 
     //console.log(services)

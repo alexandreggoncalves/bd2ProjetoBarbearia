@@ -47,6 +47,10 @@
                                 <input type="checkbox" class="custom-control-input" name="active" id="active" {{#if_equal services.active "on"}} checked {{/if_equal}}>
                                 <label class="custom-control-label" for="customCheck1">Marque para ativar o serviço</label>
                             </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" name="siteActive" id="siteActive" {{#if_equal services.siteActive "on"}} checked {{/if_equal}}>
+                                <label class="custom-control-label" for="customCheck1">Marque para ativar a exibição do serviço no site</label>
+                            </div>
                             <div class="text-center">
                                 <button type="submit" class="btn btn-primary">Salvar</button>
                                 {{#unless services._id }}

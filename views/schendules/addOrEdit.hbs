@@ -36,7 +36,9 @@
                                     <select class="form-control" name="services_id" id="services_id">
                                         <option value="">--- selecione um serviço ---</option>
                                         {{#each dataServices as | service |}}
-                                            <option value="{{service._id}}">{{service.name}}</option>
+                                            {{#if_equal service.active "on"}}
+                                                <option value="{{service._id}}_{{service.time}}">{{service.name}} - (duração: {{service.time}} minutos)</option>
+                                            {{/if_equal}}
                                         {{/each}}
                                     </select>
                                 </div>
