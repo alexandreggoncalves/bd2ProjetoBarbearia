@@ -92,7 +92,6 @@
                                           <span class="mb-2 text-sm">Nascimento: <span class="text-dark ms-sm-2 font-weight-bold">{{client.birthday}}</span></span>
                                           <span class="mb-2 text-sm">Sexo: <span class="text-dark ms-sm-2 font-weight-bold">{{client.genere}}</span></span>
                                           <span class="mb-2 text-sm">Cliente desde: <span class="text-dark ms-sm-2 font-weight-bold">{{client.clientSince}}</span></span>
-                                          <span class="mb-2 text-sm">Telefone(s): <span class="text-dark ms-sm-2 font-weight-bold">{{client.phoneNumber}}</span></span>
                                           <span class="text-xs">Endereço: <span class="text-dark ms-sm-2 font-weight-bold">
                                             {{client.address.street}}, {{client.address.number}}<br />
                                             <span style="padding-left:67px;">{{client.address.neighborhood}}</span><br />
@@ -114,6 +113,44 @@
                         </div>
                       </div>
 
+                      <!-- Modal -->
+                      <div class="modal fade" id="modal_contact_{{client._id}}" tabindex="-1" aria-labelledby="Contato" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h1 class="modal-title fs-5" id="exampleModalLabel">Módulo de Clientes - contatos</h1>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <div class="col-md-12 mt-4">
+                                <div class="card">
+                                  <div class="card-header pb-0 px-3">
+                                    <h6 class="mb-0">Informações de contato do cliente</h6>
+                                  </div>
+                                  <div class="card-body pt-4 p-3">
+                                    <ul class="list-group">
+                                      <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
+                                        <div class="d-flex flex-column">
+                                          <h6 class="mb-3 text-sm">{{client.name}}</h6>
+                                          <span class="mb-2 text-sm">Email: <span class="text-dark font-weight-bold ms-sm-2">{{client.emailAddress}}</span></span>
+                                          <div id="phones"></div>
+
+                                          </span></span>
+                                        </div>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+
                     {{/each}}
                   </tbody>
                 </table>
@@ -123,3 +160,50 @@
         </div>
       </div>
     </div>
+    
+    <script type="text/javascript">
+      $('button#btnBuscar').on("click", function (e) {
+          $('input#idProdutoES').val('');
+          $('#divResposta').empty();
+          $('#divResposta').hide();
+          $('#txtProdutoES').empty();
+          $('#divEntradaSaida').hide();
+          e.preventDefault();
+          
+          txtBusca = $('input#txtBusca').val();
+          txtBarras = $('input#txtBarras').val();
+          if( ( txtBusca.length >= 2 ) || ( txtBarras.length >= 2 ) ) { // usuário deve digitar pelo menos 3 caracteres no campo busca
+            $.ajax({
+                type: 'GET',
+                url: '{% url "buscarProdutos" %}',
+                data: {
+                    'txtBusca': txtBusca,
+                    'txtBarras': txtBarras,
+                },
+                datatype: "json",
+
+                success: function (data) {
+                  html = '<table class="table table-hover">' +
+                              '<thead>' +
+                              '<tr>' +
+                                  '<th scope="col">#</th>' +
+                                  '<th scope="col">Nome</th>' +
+                                  '<th scope="col"></th>' +
+                              '</tr>' +
+                              '</thead>';
+                  for( item in data ) {
+                      html += '<tr>' +
+                              '<td>' + item + '</td><td>' + data[item]['nome'] + ' (R$ '+data[item]['preco']+' / quant: '+data[item]['quantidade']+')</td>' + 
+                              '<td><button type="button" class="btn btn-primary btn-sm" onClick="setProduto(\''+item+'\', \''+data[item]['nome']+'\', \''+data[item]['quantidade']+'\', \''+data[item]['preco']+'\');">selecionar</button></td>';
+                      //console.log(data[item]);
+                  }   
+                  html += '</table>';
+                  $('input#produtoQuantidade').val(data[item]['quantidade']);
+                  $('#divResposta').append(html);
+                  $('#divResposta').show();
+                }
+
+            });
+          }
+      });
+    </script>

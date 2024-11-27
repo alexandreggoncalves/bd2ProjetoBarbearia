@@ -13,7 +13,7 @@
                                     <h6>{{page}}</h6>
                                 {{/if }}
                             </td>
-                            <td><a href="/"><button class="btn btn-success">Listar clientes</button></a></td>
+                            <td><a href="/clients"><button class="btn btn-success">Listar clientes</button></a></td>
                         </table>
                         <!-- Horizontal Form -->
                         <form action="/clients/addOrEdit" method="post">
@@ -38,15 +38,9 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="inputEmail3" class="col-sm-2 col-form-label">Telefone(s):</label>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Telefone" required value="{{clients.phoneNumber}}">
-                                </div>
-                            </div>
-                            <div class="row mb-3">
                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Cliente desde:</label>
                                 <div class="col-sm-2">
-                                    <input type="text" class="form-control" id="clientSince" name="clientSince" placeholder="Cliente desde" required value="{{clients.clientSince}}">&nbsp;<label for="imputEmail3">(dd/mm/aaaa)</label>
+                                    <input type="text" class="form-control" id="clientSince" name="clientSince" placeholder="Cliente desde" required value="{{clients.clientSince}}">&nbsp;<label for="imputEmail3">(ano)</label>
                                 </div>
                             </div>
                             <div class="row mb-3">

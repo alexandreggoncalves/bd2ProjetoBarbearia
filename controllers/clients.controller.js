@@ -1,7 +1,8 @@
 const express = require('express') // importando o modulo express
 const router = express.Router()
 const usersLogedRoutes = require('../controllers/users.loged.controller')
-const Clients = require('../models/clients.model') // importação do model
+const Clients = require('../models/clients.model') 
+const phoneClients = require('../models/phoneClients.model')
 //const { title } = require('process')
 
 // consulta
