@@ -42,6 +42,7 @@
                         <p class="text-sm font-weight-bold mb-0">{{client.clientSince}}</p>
                       </td>
                       <td class="align-middle">
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#modal_contact_{{client._id}}" onClick="getNumber('{{client._id}}');"><i class="fas fa-eye text-dark me-2" aria-hidden="true"></i>Contatos</a>&nbsp;&nbsp;&nbsp;&nbsp;
                         <a href="#" data-bs-toggle="modal" data-bs-target="#modal_{{client._id}}"><i class="fas fa-eye text-dark me-2" aria-hidden="true"></i>Ver</a>&nbsp;&nbsp;&nbsp;&nbsp;
                         <a href="/clients/addOrEdit/{{this._id}}"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i> Editar</a>&nbsp;&nbsp;&nbsp;&nbsp;
                         <a href="#" data-bs-toggle="modal" data-bs-target="#delete{{client._id}}"><i class="fas fa-trash text-dark me-2" aria-hidden="true"></i> Apagar</a>
@@ -68,6 +69,7 @@
                         </div>
                       </div>
                     </div><!-- End Basic Modal-->
+
                       <!-- Modal -->
                       <div class="modal fade" id="modal_{{client._id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
@@ -115,27 +117,51 @@
 
                       <!-- Modal -->
                       <div class="modal fade" id="modal_contact_{{client._id}}" tabindex="-1" aria-labelledby="Contato" aria-hidden="true">
-                        <div class="modal-dialog">
+                        <div class="modal-dialog modal-lg">
                           <div class="modal-content">
                             <div class="modal-header">
                               <h1 class="modal-title fs-5" id="exampleModalLabel">Módulo de Clientes - contatos</h1>
                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                              <div class="col-md-12 mt-4">
+                              <div class="col-md-12">
                                 <div class="card">
-                                  <div class="card-header pb-0 px-3">
-                                    <h6 class="mb-0">Informações de contato do cliente</h6>
-                                  </div>
-                                  <div class="card-body pt-4 p-3">
+                                  <div class="card-body">
                                     <ul class="list-group">
-                                      <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
-                                        <div class="d-flex flex-column">
+                                      <li class="list-group-item border-0 d-flex mb-2 bg-gray-100 border-radius-lg">
+                                        <div class="col-md-12 mt-4">
+                                          <label>Adicionar número de contato...</label>
+                                          <div class="row">
+                                            <div class="col-sm-3">
+                                              <input type="text" class="form-control" name="ddd_{{client._id}}" id="ddd_{{client._id}}" placeholder="ddd" value="" required>
+                                            </div>
+                                            <div class="col-sm-6">
+                                              <input type="text" class="form-control" name="phone_{{client._id}}" id="phone_{{client._id}}" placeholder="telefone" value="" required>
+                                            </div>
+                                          </div>
+                                          <div class="col-md-12 mt-4">
+                                            <div class="row">
+                                              <div class="col-sm-5">
+                                                <select class="form-control" name="type_{{client._id}}" id="type_{{client._id}}">
+                                                  <option value="celular">celular</option>
+                                                  <option value="residencial">residencial</option>
+                                                  <option value="comercial">comercial</option>
+                                                  <option value="outro">outro</option>
+                                                </select>
+                                              </div>
+                                              <div class="col-sm-4">
+                                                <input type="checkbox" class="mb-3" v-model="checkboxes.unchecked" name="whatsapp_{{client._id}}" id="whatsapp_{{client._id}}" value="on">&nbsp;WhatsApp
+                                              </div>
+                                              <div class="col-sm-3">
+                                                <input type="button" class="btn btn-xs btn-primary" name="salvar" id="salvar" onClick="saveNumber('{{client._id}}');" value="salvar">
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <hr noshade>
                                           <h6 class="mb-3 text-sm">{{client.name}}</h6>
                                           <span class="mb-2 text-sm">Email: <span class="text-dark font-weight-bold ms-sm-2">{{client.emailAddress}}</span></span>
-                                          <div id="phones"></div>
-
-                                          </span></span>
+                                          <div class="container"><div class="row"><div class="col-sm-2"><span><strong>DDD</strong></span></div><div class="col-sm-4"><span><strong>Número</strong></span></div><div class="col-sm-4"><span><strong>TTIPO</strong></span></div><div class="col-sm-2"><span><strong>WhatsApp</strong></span></div></div></div>
+                                          <div id="phones_{{client._id}}"></div>
                                         </div>
                                       </li>
                                     </ul>
@@ -149,8 +175,6 @@
                           </div>
                         </div>
                       </div>
-
-
                     {{/each}}
                   </tbody>
                 </table>
@@ -160,50 +184,63 @@
         </div>
       </div>
     </div>
-    
+    <script src="/static/js/jquery-3.7.1.min.js"></script>
     <script type="text/javascript">
-      $('button#btnBuscar').on("click", function (e) {
-          $('input#idProdutoES').val('');
-          $('#divResposta').empty();
-          $('#divResposta').hide();
-          $('#txtProdutoES').empty();
-          $('#divEntradaSaida').hide();
-          e.preventDefault();
-          
-          txtBusca = $('input#txtBusca').val();
-          txtBarras = $('input#txtBarras').val();
-          if( ( txtBusca.length >= 2 ) || ( txtBarras.length >= 2 ) ) { // usuário deve digitar pelo menos 3 caracteres no campo busca
+      function getNumber(id) {
+        $('#ddd_'+id).val('');
+        $('#phone_'+id).val('');
+        $.ajax({
+          type: 'GET', 
+          url: '/clients/getPhoneNumber', 
+          data: {
+            'client_id': id
+          },
+          datatype: "json",
+
+          success: function(dataReturn) {
+            if ( dataReturn.length > 0 ) {
+              $('#phones_'+id).html('')
+               dataReturn.forEach( function(data) {
+                  if( data.whatsapp == 'on' ) { whatsappText = 'SIM' } else { whatsappText = 'NÃO' }
+                  $('#phones_'+id).append('<div class="container"><div class="row"><div class="col-sm-2"><span>'+data.ddd+'</span></div><div class="col-sm-4"><span>'+data.phone+'</span></div><div class="col-sm-4"><span>'+data.type+'</span></div><div class="col-sm-2"><span>'+whatsappText+'</span></div></div></div></div>')
+              })
+            } else {
+              $('#phones_'+id).append('<div class="container"><div class="row"><div class="col-sm-12"><span>não foram encontrados registros.</div></div>')
+            }
+          }
+        });
+      }
+      function saveNumber(id) {
+          client_id = id;
+          ddd = $('#ddd_'+id).val();
+          phone = $('#phone_'+id).val();
+          type = $('#type_'+id).val();
+          if( $('#whatsapp_'+id).is(':checked') ) {
+            whatsapp = 'on'
+          } else {
+              whatsapp = ''
+          }
+
+
+          if( ( ddd.length >= 2 ) && ( phone.length >= 8 ) ) { 
             $.ajax({
                 type: 'GET',
-                url: '{% url "buscarProdutos" %}',
+                url: '/clients/addPhoneNumber',
                 data: {
-                    'txtBusca': txtBusca,
-                    'txtBarras': txtBarras,
+                    'client_id': client_id,
+                    'ddd': ddd,
+                    'phone': phone,
+                    'type': type, 
+                    'whatsapp':  whatsapp,
                 },
                 datatype: "json",
 
                 success: function (data) {
-                  html = '<table class="table table-hover">' +
-                              '<thead>' +
-                              '<tr>' +
-                                  '<th scope="col">#</th>' +
-                                  '<th scope="col">Nome</th>' +
-                                  '<th scope="col"></th>' +
-                              '</tr>' +
-                              '</thead>';
-                  for( item in data ) {
-                      html += '<tr>' +
-                              '<td>' + item + '</td><td>' + data[item]['nome'] + ' (R$ '+data[item]['preco']+' / quant: '+data[item]['quantidade']+')</td>' + 
-                              '<td><button type="button" class="btn btn-primary btn-sm" onClick="setProduto(\''+item+'\', \''+data[item]['nome']+'\', \''+data[item]['quantidade']+'\', \''+data[item]['preco']+'\');">selecionar</button></td>';
-                      //console.log(data[item]);
-                  }   
-                  html += '</table>';
-                  $('input#produtoQuantidade').val(data[item]['quantidade']);
-                  $('#divResposta').append(html);
-                  $('#divResposta').show();
+                  getNumber(client_id);
                 }
-
             });
+          } else {
+            alert('DDD ou telefone inválido(s)!');
           }
-      });
+        }
     </script>

@@ -28,7 +28,6 @@ router.post('/addOrEdit', usersLogedRoutes, (req, res) => {
         name: req.body.name,
         emailAddress: req.body.emailAddress,
         cpf: req.body.cpf, 
-        phoneNumber: req.body.phoneNumber, 
         birthday: req.body.birthday, 
         genere: req.body.genere,
         clientSince: req.body.clientSince,
@@ -52,6 +51,30 @@ router.post('/addOrEdit', usersLogedRoutes, (req, res) => {
     Clients.findByIdAndUpdate(_id, clients)
     .then(data => res.redirect('/clients'))
     .catch(err => console.log('erro durante a atualização de dados: \n', err))
+})
+
+// consulta telefones de contato
+router.get('/getPhoneNumber', usersLogedRoutes, (req, res) => { 
+    phoneClients.find({ "client_id": req.query.client_id}).lean()
+    .then(data => res.json(data))
+    .catch(err => 
+        console.log('erro ao processar a operação: \n', err)
+    )
+})
+
+//adicionar telefone
+router.get('/addPhoneNumber', usersLogedRoutes, (req, res) => {
+    const phoneClient = {
+        client_id: req.query.client_id,
+        ddd: req.query.ddd, 
+        phone: req.query.phone, 
+        type: req.query.type, 
+        whatsapp: req.query.whatsapp, 
+    }
+    new phoneClients({...phoneClient}).save()
+    .then( res.send(true))
+    .catch(err =>
+        console.log('Erro ao inserir telefone de contato.', err))
 })
 
 //editar
