@@ -55,7 +55,7 @@ router.get('/addOrEdit', usersLogedRoutes, (req, res) => {
 router.post('/addOrEdit', usersLogedRoutes, (req, res) => {
     
     // transforma uma data em timestamp
-    const dateToTime = req.body.schenduleDate.substring(6,10)+'-'+req.body.schenduleDate.substring(3,5)+'-'+req.body.schenduleDate.substring(0,2)+' '+req.body.schenduleTime+':00'
+    const dateToTime = req.body.schenduleDate+' '+req.body.schenduleTime+':00'
     const time = new Date(dateToTime)
     const timeSTMP = time.getTime()
     
